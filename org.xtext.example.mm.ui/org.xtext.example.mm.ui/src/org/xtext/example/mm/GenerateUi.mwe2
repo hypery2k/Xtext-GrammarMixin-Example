@@ -21,6 +21,10 @@ Workflow {
             // register common base
            	registerGeneratedEPackage = "org.xtext.example.mm.common.CommonPackage"
             registerGenModelFile = "platform:/resource/org.xtext.example.mm.common/src-gen/org/xtext/example/mm/Common.genmodel"
+                       
+            // register meta lang
+           	registerGeneratedEPackage = "org.xtext.example.mm.meta.MetaPackage"
+            registerGenModelFile = "platform:/resource/org.xtext.example.mm.meta/src-gen/org/xtext/example/mm/Meta.genmodel"
         }
     
         component = DirectoryCleaner {

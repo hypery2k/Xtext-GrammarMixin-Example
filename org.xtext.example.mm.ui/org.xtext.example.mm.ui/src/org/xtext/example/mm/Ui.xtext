@@ -1,5 +1,7 @@
 grammar org.xtext.example.mm.Ui with org.xtext.example.mm.Common
 
+import "http://www.xtext.org/example/mm/Meta" as meta
+
 generate ui "http://www.xtext.org/example/mm/Ui"
 
 UiModel:
@@ -31,7 +33,7 @@ Global: {Global} 'global' '{'
 Loader: view=ViewElement;
 	
 // view elements, only read-only
-ViewElement: type=ViewType name=ID 'selector =' selector=Selector ;
+ViewElement: type=ViewType name=ID 'selector =' selector=Selector domainObject=[meta::Type];
 
 enum ViewType: ELEMENT ='element';
 
@@ -42,7 +44,7 @@ ActionElement: type=ActionType name=ID 'selector =' selector=Selector ;
 enum ActionType: CLICK = 'click' ;
 
 // input elements, rw-access
-InputElement: type=InputType name=ID 'selector =' selector=Selector ;	
+InputElement: type=InputType name=ID 'selector =' selector=Selector domainObject=[meta::Type];	
 	
 enum InputType: ENTER_TEXT ='type' | SELECT = 'select';
 	
