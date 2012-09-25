@@ -1,0 +1,8 @@
+grammar org.xtext.example.mm.Meta with org.eclipse.xtext.common.Terminals
+
+import "http://www.xtext.org/example/mm/Domain" as domain
+
+generate meta "http://www.xtext.org/example/mm/Meta"
+
+Type:
+	mapsTo=[domain::Type];
