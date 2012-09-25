@@ -1,0 +1,15 @@
+src-gen
+xtend-gen
+bin
+target
+plugin.xml_gen
+tmp/
+.DS_Store
+*.swp
+*~
+*.class
+.history
+.indexes
+.lock
+.log
+.refactorings

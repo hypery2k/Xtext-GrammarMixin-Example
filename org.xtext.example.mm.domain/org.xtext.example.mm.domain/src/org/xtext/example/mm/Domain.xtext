@@ -1,0 +1,50 @@
+grammar org.xtext.example.mm.Domain with org.xtext.example.mm.Common
+
+generate domain "http://www.xtext.org/example/mm/Domain"
+
+Domainmodel:
+  (elements += AbstractElement)*
+;
+ 
+PackageDeclaration:
+  'package' name = QualifiedName '{'
+    (elements += AbstractElement)*
+  '}'
+;
+ 
+AbstractElement:
+  PackageDeclaration | Type | Import
+;
+ 
+QualifiedName:
+  ID ('.' ID)*
+;
+ 
+Import:
+  'import' importedNamespace = QualifiedNameWithWildcard
+;
+   
+QualifiedNameWithWildcard:
+  QualifiedName '.*'?
+;
+   
+Type:
+  DataType | Entity
+;
+   
+DataType:
+  'datatype' name=ID
+;
+  
+Entity:
+  'entity' name = ID ('extends' superType = [Entity | QualifiedName])?
+  '{'
+    (features += Feature)*
+  '}'
+;
+  
+Feature:
+  (many ?= 'many')? name = ID ':' type = [Type | QualifiedName]
+; 
+
+

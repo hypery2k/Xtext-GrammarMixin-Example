@@ -1,0 +1,60 @@
+grammar org.xtext.example.mm.Ui with org.xtext.example.mm.Common
+
+generate ui "http://www.xtext.org/example/mm/Ui"
+
+UiModel:
+	'setup' name=ID server=Server '{'	
+		webAppSetup=WebAppSetup		
+	'}';
+
+WebAppSetup:
+	'webapp' (name=ID)? '{'		
+		(global=Global)?
+		(pages+=Page)+ 
+		('actions' definedGlobalAction+=ActionElement)*
+	'}';
+	
+Page:
+	'page' name=ID ('path' path=UrlValue)?	'{'
+		('input' input+=InputElement (','input+=InputElement)*)?
+		('view' view+=ViewElement (','view+=ViewElement)*)?	
+		('action' action+=ActionElement (','action+=ActionElement)*)?
+	'}';
+	
+Global: {Global} 'global' '{'
+			('loaderElement' loader=Loader)?		
+			('input' definedGlobalInputs+=InputElement (','definedGlobalInputs+=InputElement)*)?
+			('view' definedGlobalViews+=ViewElement (','definedGlobalViews+=ViewElement)*)?	
+			('action' definedGlobalActions+=ActionElement (','definedGlobalActions+=ActionElement)*)?
+		'}';
+		
+Loader: view=ViewElement;
+	
+// view elements, only read-only
+ViewElement: type=ViewType name=ID 'selector =' selector=Selector ;
+
+enum ViewType: ELEMENT ='element';
+
+// action elements, ready-only, but with interaction
+
+ActionElement: type=ActionType name=ID 'selector =' selector=Selector ;
+			
+enum ActionType: CLICK = 'click' ;
+
+// input elements, rw-access
+InputElement: type=InputType name=ID 'selector =' selector=Selector ;	
+	
+enum InputType: ENTER_TEXT ='type' | SELECT = 'select';
+	
+
+Selector: 
+	idSelector=IdSelector | xPathSelector = xPathSelector | nameSelector = NameSelector | linkSelector = LinkSelector
+;
+
+IdSelector:	'#'id=ID;
+
+xPathSelector: '//''(' xPath=STRING  ')';
+
+LinkSelector:	'label''(' link=STRING  ')';
+
+NameSelector:	'name''(' name=STRING  ')';
